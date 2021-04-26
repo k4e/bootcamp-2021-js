@@ -32,10 +32,10 @@ export const createTodoItem = (id, name, done) => {
   return li;
 };
 
-export const refreshList = (requestMethod) => {
+export const refreshList = (requestFn) => {
   const todosDiv = document.getElementsByClassName('todos__wrapper')[0];
   const todosUL = todosDiv.getElementsByClassName('todos')[0];
-  requestMethod(
+  requestFn(
     (todoList) => {
       while (todosUL.firstChild) {
         todosUL.removeChild(todosUL.firstChild);
@@ -51,3 +51,11 @@ export const refreshList = (requestMethod) => {
     }
   );
 };
+
+export const onLoad = (sendGetRequest) => {
+  const button = document.getElementsByClassName('todo-form__submit')[0];
+  button.addEventListener('click', (e) => {
+    e.preventDefault();
+    refreshList(sendGetRequest);
+  });
+}
