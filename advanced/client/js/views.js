@@ -1,6 +1,10 @@
 
 const myEscape = (s) => s
-    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 
 const createTodoItem = (id, name, done) => {
   const li = document.createElement('li');
@@ -17,7 +21,7 @@ const createTodoItem = (id, name, done) => {
   label.appendChild(span);
   const divName = document.createElement('div');
   divName.setAttribute('class', 'todo-name');
-  divName.innerText = name;
+  divName.innerText = myEscape(name);
   const divRemoveButton = document.createElement('div');
   divRemoveButton.setAttribute('data-todo-id', String(id));
   divRemoveButton.setAttribute('class', 'todo-remove-button');
@@ -39,7 +43,7 @@ export const refreshList = (requestMethod) => {
       for (let i = 0; i < todoList.length; ++i) {
         const todo = todoList[i];
         const id = todo.id;
-        const name = myEscape(todo.name);
+        const name = todo.name;
         const done = todo.done;
         const todoItem = createTodoItem(id, name, done);
         todosUL.appendChild(todoItem);
