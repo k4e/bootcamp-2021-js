@@ -16,12 +16,13 @@ export const createTodoItem = (id, name, done) => {
   input.setAttribute('type', 'checkbox');
   input.setAttribute('class', 'todo-toggle');
   input.checked = done;
-  const span = document.createElement('todo-toggle__checkmark');
+  const span = document.createElement('span');
+  span.setAttribute('class', 'todo-toggle__checkmark');
   label.appendChild(input);
   label.appendChild(span);
   const divName = document.createElement('div');
   divName.setAttribute('class', 'todo-name');
-  divName.innerText = myEscape(name);
+  divName.innerHTML = myEscape(name);
   const divRemoveButton = document.createElement('div');
   divRemoveButton.setAttribute('data-todo-id', String(id));
   divRemoveButton.setAttribute('class', 'todo-remove-button');
