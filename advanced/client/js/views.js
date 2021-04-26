@@ -1,12 +1,12 @@
 
-const myEscape = (s) => s
+export const myEscape = (s) => s
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
 
-const createTodoItem = (id, name, done) => {
+export const createTodoItem = (id, name, done) => {
   const li = document.createElement('li');
   li.setAttribute('class', 'todos__wrapper');
   const label = document.createElement();
