@@ -1,15 +1,15 @@
 
-export const myEscape = (s) => s
+export const myEscape = (s) => s ? s
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
+    .replace(/'/g, '&#39;') : '';
 
 export const createTodoItem = (id, name, done) => {
   const li = document.createElement('li');
-  li.setAttribute('class', 'todos__wrapper');
-  const label = document.createElement();
+  li.setAttribute('class', 'todo-item');
+  const label = document.createElement('label');
   label.setAttribute('class', 'todo-toggle__container');
   const input = document.createElement('input');
   input.setAttribute('data-todo-id', id);
@@ -52,10 +52,27 @@ export const refreshList = (requestFn) => {
   );
 };
 
-export const onLoad = (sendGetRequest) => {
+export const onSubmit = (requestFn) => {
+  const todosDiv = document.getElementsByClassName('todos__wrapper')[0];
+  const todosUL = todosDiv.getElementsByClassName('todos')[0];
+  const textInput = document.getElementsByClassName('todo-form__input')[0];
+  const name = textInput.value;
+  requestFn(
+    name,
+    (todo) => {
+      const id = todo.id;
+      const name = todo.name;
+      const done = todo.done;
+      const todoItem = createTodoItem(id, name, done);
+      todosUL.appendChild(todoItem);
+    }
+  )
+};
+
+export const onLoad = (sendGetRequest, sendPostRequest) => {
   const button = document.getElementsByClassName('todo-form__submit')[0];
   button.addEventListener('click', (e) => {
     e.preventDefault();
-    refreshList(sendGetRequest);
+    onSubmit(sendPostRequest);
   });
 }
